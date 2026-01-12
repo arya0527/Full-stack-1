@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title> DYNAMIC TAGS </title>
+    </head>
+    <body>
+        <button onclick="createTags()">INSERT ELEMENT </button>
+         <button onclick="removeTags()"> REMOVE ELEMENT</button>
+         <div id="container"></div>
+         <script>
+            function createTags() {
+                const container = document.getElementById('container');
+                container.innerHTML = ''; 
+                const h1 = document.createElement('h1');
+                h1.textContent = 'Dynamic Heading';
+                const p = document.createElement('p');
+                p.textContent = 'This is a paragraph.';
+                container.appendChild(h1);
+                container.appendChild(p);
+            }
+
+            function removeTags() {
+                const container= document.getElementById('container');
+                container.innerHTML = ''; }
+         </script>
+    </body>
+    </html>

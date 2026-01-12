@@ -1,0 +1,131 @@
+<!DOCTYPE HTML> 
+<html lang="en">
+<head>
+  <title>Registration form</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+    .container {
+      width: 100%;
+      max-width: 500px;
+      margin: 10px auto;
+      padding: 20px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      box-sizing: border-box;
+      border: 5px solid blue;
+    }
+    .header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 20px;
+    }
+    .logo {
+      width: 80px;
+      height: auto;
+    }
+    h1 {
+      color: red;
+      text-align: center;
+      margin-top: 0;
+    }
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+      padding: 10px;
+      box-sizing: border-box;
+    }
+    label {
+      font-weight: bold;
+    }
+    input[type="text"],
+    input[type="password"],
+    select {
+      padding: 8px;
+      width: 100%;
+      box-sizing: border-box;
+    }
+    .gender {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+    }
+    .languages {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      padding: 10px;
+      border: 1px solid #ccc;
+      background-color: #f9f9f9;
+    }
+    .buttons {
+      display: flex;
+      justify-content: space-between;
+    }
+    button[type="reset"] {
+      padding: 10px 20px;
+      font-size: 16px;
+      background-color: red;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+    button[type="submit"] {
+      padding: 10px 20px;
+      font-size: 16px;
+      background-color: green;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+
+  </style>
+</head>
+<body>
+  <div class="header">
+    <!-- Optional header content -->
+  </div>
+  <div class="container">
+    <img src="Chandigarh-University-CU-logo-350x556.jpg" alt="Logo" class="logo">
+    <h1>Registration</h1>
+    <form>
+      <label for="name">Name:</label>
+      <input type="text" id="name" name="name" required>
+
+      <label for="password">Password:</label>
+      <input type="password" id="password" name="password" required>
+
+      <label>Gender:</label>
+      <div class="gender">
+        <label><input type="radio" name="gender" value="male"> Male</label>
+        <label><input type="radio" name="gender" value="female"> Female</label>
+      </div>
+
+      <label>Languages:</label>
+      <div class="languages">
+        <label><input type="checkbox" name="language" value="hindi"> Hindi</label>
+        <label><input type="checkbox" name="language" value="punjabi"> Punjabi</label>
+        <label><input type="checkbox" name="language" value="english"> English</label>
+      </div>
+
+      <label for="country">Country:</label>
+      <select id="country" name="country" required>
+        <option value="">Select Country</option>
+        <option value="india">India</option>
+        <option value="usa">USA</option>
+        <option value="uk">UK</option>
+        <option value="canada">Canada</option>
+      </select>
+
+      <div class="buttons">
+        <button type="reset">Reset</button>
+        <button type="submit">Submit</button>
+      </div>
+    </form>
+  </div>
+</body>
+</html>

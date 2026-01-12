@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Random Background Color</title>
+    <style>
+        body {
+            text-align: center;
+            font-family: Arial, sans-serif;
+            margin-top: 100px;
+            transition: background-color 0.5s ease;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 18px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+    <button onclick="changeBackground()">Click Me</button>
+
+    <script>
+        // Array of colors
+        let colors = ["red", "blue", "green", "yellow", "purple", "pink", "orange", "cyan"];
+
+        // Function to generate a random index
+        function getRandomNumber(max) {
+            return Math.floor(Math.random() * max);
+        }
+
+        // Function to change background color
+        function changeBackground() {
+            let randomIndex = getRandomNumber(colors.length);
+            document.body.style.backgroundColor = colors[randomIndex];
+        }
+    </script>
+
+</body>
+</html>

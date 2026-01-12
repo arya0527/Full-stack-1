@@ -1,0 +1,753 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LaunchLink - Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(to bottom right, #F0F2F5, #FFECC0);
+        }
+        /* Custom scrollbar for a cleaner look */
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 6px;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #d1d5db;
+            border-radius: 6px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #9ca3af;
+        }
+        .nav-item.active {
+            background-color: #4338CA; /* A deep indigo for active state */
+            color: white;
+        }
+        .nav-item.active svg {
+            color: white;
+        }
+        .page {
+            display: none;
+        }
+        .page.active {
+            display: block;
+            animation: fadeIn 0.3s ease-in-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="flex h-screen overflow-hidden">
+        <!-- Sidebar Navigation -->
+        <aside class="w-64 bg-white/50 backdrop-blur-sm flex flex-col p-4 border-r border-slate-200 transition-colors duration-300">
+            <div class="flex items-center gap-2 px-2 h-16">
+                <div class="bg-indigo-600 p-2 rounded-lg">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-link-2 text-white"><path d="M9 17H7A5 5 0 0 1 7 7h2"/><path d="M15 7h2a5 5 0 1 1 0 10h-2"/><line x1="8" x2="16" y1="12" y2="12"/></svg>
+                </div>
+                <h1 class="text-2xl font-bold text-slate-800">LaunchLink</h1>
+            </div>
+
+            <nav class="mt-8 flex-1">
+                <ul class="space-y-2" id="nav-menu">
+                    <li>
+                        <a href="#" class="nav-item flex items-center gap-3 px-4 py-3 rounded-lg text-slate-600 hover:bg-indigo-50 hover:text-indigo-700 transition-all duration-200 active" data-page="home">
+                            <i data-lucide="layout-dashboard"></i>
+                            <span class="font-medium">Home</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" class="nav-item flex items-center gap-3 px-4 py-3 rounded-lg text-slate-600 hover:bg-indigo-50 hover:text-indigo-700 transition-all duration-200" data-page="portfolio">
+                            <i data-lucide="briefcase"></i>
+                            <span class="font-medium">Portfolio</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" class="nav-item flex items-center gap-3 px-4 py-3 rounded-lg text-slate-600 hover:bg-indigo-50 hover:text-indigo-700 transition-all duration-200" data-page="opportunities">
+                            <i data-lucide="search"></i>
+                            <span class="font-medium">Opportunities</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" class="nav-item flex items-center gap-3 px-4 py-3 rounded-lg text-slate-600 hover:bg-indigo-50 hover:text-indigo-700 transition-all duration-200" data-page="mentors">
+                            <i data-lucide="users"></i>
+                            <span class="font-medium">Mentors</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" class="nav-item flex items-center gap-3 px-4 py-3 rounded-lg text-slate-600 hover:bg-indigo-50 hover:text-indigo-700 transition-all duration-200" data-page="leaderboard">
+                            <i data-lucide="trophy"></i>
+                            <span class="font-medium">Leaderboard</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+            
+            <div class="mt-auto">
+                <div class="border-t border-slate-200 pt-4">
+                     <ul class="space-y-2">
+                         <li>
+                            <a href="#" class="nav-item flex items-center gap-3 px-4 py-3 rounded-lg text-slate-600 hover:bg-indigo-50 hover:text-indigo-700 transition-all duration-200" data-page="profile">
+                                <i data-lucide="user-circle"></i>
+                                <span class="font-medium">Profile</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" class="nav-item flex items-center gap-3 px-4 py-3 rounded-lg text-slate-600 hover:bg-indigo-50 hover:text-indigo-700 transition-all duration-200" data-page="settings">
+                                <i data-lucide="settings"></i>
+                                <span class="font-medium">Settings</span>
+                            </a>
+                        </li>
+                     </ul>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main id="main-content" class="flex-1 overflow-y-auto p-4 md:p-8">
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                <!-- Center column -->
+                <div class="lg:col-span-2">
+                    <!-- Home Page -->
+                    <div id="home" class="page active space-y-8">
+                        <div>
+                            <h2 class="text-2xl font-bold text-slate-800 mb-2">Recent Updates</h2>
+                            <div class="bg-white/60 backdrop-blur-md p-6 rounded-xl shadow-sm space-y-6">
+                                <div class="flex gap-4">
+                                    <div class="bg-blue-100 rounded-full h-10 w-10 flex-shrink-0 flex items-center justify-center">
+                                        <i data-lucide="lightbulb" class="text-blue-600"></i>
+                                    </div>
+                                    <div>
+                                        <h3 class="font-semibold text-slate-700">New AI-powered match found</h3>
+                                        <p class="text-sm text-slate-500">Based on your recent portfolio updates, we found 3 new opportunities that match your skills.</p>
+                                        <span class="text-xs text-slate-400 mt-1 block">2 hours ago</span>
+                                    </div>
+                                </div>
+                                <div class="border-t border-slate-100 my-4"></div>
+                                <div class="flex gap-4">
+                                    <div class="bg-green-100 rounded-full h-10 w-10 flex-shrink-0 flex items-center justify-center">
+                                        <i data-lucide="check-circle" class="text-green-600"></i>
+                                    </div>
+                                    <div>
+                                        <h3 class="font-semibold text-slate-700">Application Status Updated</h3>
+                                        <p class="text-sm text-slate-500">Your application for Google APM program has moved to the next round.</p>
+                                        <span class="text-xs text-slate-400 mt-1 block">Just now</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div>
+                            <h2 class="text-2xl font-bold text-slate-800 mb-2">AI-Powered Recommendations</h2>
+                            <div class="space-y-4">
+                                <!-- Recommendation Item 1 -->
+                                <div class="bg-white/60 backdrop-blur-md p-5 rounded-xl shadow-sm transition-all hover:shadow-md">
+                                    <div class="flex items-start justify-between">
+                                        <div>
+                                            <h3 class="font-bold text-lg text-slate-800">Product Manager Intern - Tech Startup</h3>
+                                            <div class="flex items-center gap-4 text-sm text-slate-500 mt-1">
+                                                <span class="flex items-center gap-1"><i data-lucide="building-2" class="w-4 h-4"></i>InnovateX Solutions</span>
+                                                <span class="flex items-center gap-1"><i data-lucide="map-pin" class="w-4 h-4"></i>San Francisco, CA</span>
+                                                <span class="flex items-center gap-1 text-red-500"><i data-lucide="clock" class="w-4 h-4"></i>2 Days left</span>
+                                            </div>
+                                        </div>
+                                        <div class="flex items-center gap-2 bg-green-100 text-green-700 px-3 py-1 rounded-full text-sm font-semibold">
+                                            <i data-lucide="sparkles" class="w-4 h-4"></i>
+                                            <span>92% Match</span>
+                                        </div>
+                                    </div>
+                                    <p class="text-slate-600 my-4 text-sm">Join a fast-growing fintech startup focusing on AI-powered investment platforms. Perfect match for your background in business analytics and tech interest.</p>
+                                    <div class="flex items-center justify-between">
+                                        <span class="bg-indigo-100 text-indigo-700 text-xs font-semibold px-3 py-1 rounded-full">PM Internship</span>
+                                        <button class="bg-indigo-600 text-white font-semibold px-4 py-2 rounded-lg hover:bg-indigo-700 transition-colors">View Details</button>
+                                    </div>
+                                </div>
+                                <!-- Recommendation Item 2 -->
+                                <div class="bg-white/60 backdrop-blur-md p-5 rounded-xl shadow-sm transition-all hover:shadow-md">
+                                    <div class="flex items-start justify-between">
+                                        <div>
+                                            <h3 class="font-bold text-lg text-slate-800">Data Analyst Co-op</h3>
+                                            <div class="flex items-center gap-4 text-sm text-slate-500 mt-1">
+                                                <span class="flex items-center gap-1"><i data-lucide="building-2" class="w-4 h-4"></i>DataDriven Inc.</span>
+                                                <span class="flex items-center gap-1"><i data-lucide="map-pin" class="w-4 h-4"></i>New York, NY</span>
+                                                <span class="flex items-center gap-1 text-amber-500"><i data-lucide="clock" class="w-4 h-4"></i>1 week left</span>
+                                            </div>
+                                        </div>
+                                        <div class="flex items-center gap-2 bg-green-100 text-green-700 px-3 py-1 rounded-full text-sm font-semibold">
+                                            <i data-lucide="sparkles" class="w-4 h-4"></i>
+                                            <span>88% Match</span>
+                                        </div>
+                                    </div>
+                                    <p class="text-slate-600 my-4 text-sm">Analyze large datasets to provide actionable insights for our marketing team. Experience with SQL and Python is a plus.</p>
+                                    <div class="flex items-center justify-between">
+                                        <span class="bg-sky-100 text-sky-700 text-xs font-semibold px-3 py-1 rounded-full">Data Science</span>
+                                        <button class="bg-indigo-600 text-white font-semibold px-4 py-2 rounded-lg hover:bg-indigo-700 transition-colors">View Details</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Portfolio Page -->
+                    <div id="portfolio" class="page">
+                        <h2 class="text-2xl font-bold text-slate-800 mb-4">My Portfolio</h2>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <!-- Project Card 1 -->
+                            <div class="bg-white/60 backdrop-blur-md p-6 rounded-xl shadow-sm transition-all hover:shadow-md">
+                                <h3 class="font-bold text-lg text-slate-800">AI-Powered Recommendation Engine</h3>
+                                <p class="text-slate-600 my-3 text-sm">Developed a collaborative filtering model in Python to provide personalized content recommendations, improving user engagement by 25%.</p>
+                                <div class="flex flex-wrap gap-2">
+                                    <span class="bg-slate-100 text-slate-700 text-xs font-medium px-2.5 py-1 rounded-full">Python</span>
+                                    <span class="bg-slate-100 text-slate-700 text-xs font-medium px-2.5 py-1 rounded-full">Machine Learning</span>
+                                    <span class="bg-slate-100 text-slate-700 text-xs font-medium px-2.5 py-1 rounded-full">Pandas</span>
+                                </div>
+                            </div>
+                            <!-- Project Card 2 -->
+                            <div class="bg-white/60 backdrop-blur-md p-6 rounded-xl shadow-sm transition-all hover:shadow-md">
+                                <h3 class="font-bold text-lg text-slate-800">LaunchLink UI/UX Design</h3>
+                                <p class="text-slate-600 my-3 text-sm">Designed a user-centric dashboard for a professional networking platform using Figma. Focused on intuitive navigation and clean aesthetics.</p>
+                                <div class="flex flex-wrap gap-2">
+                                    <span class="bg-slate-100 text-slate-700 text-xs font-medium px-2.5 py-1 rounded-full">Figma</span>
+                                    <span class="bg-slate-100 text-slate-700 text-xs font-medium px-2.5 py-1 rounded-full">UI/UX Design</span>
+                                    <span class="bg-slate-100 text-slate-700 text-xs font-medium px-2.5 py-1 rounded-full">Prototyping</span>
+                                </div>
+                            </div>
+                            <!-- Add Project Card -->
+                             <div class="border-2 border-dashed border-slate-300 rounded-xl flex flex-col items-center justify-center p-6 text-center hover:border-indigo-500 hover:bg-white/60 backdrop-blur-md transition-all cursor-pointer">
+                                <i data-lucide="plus-circle" class="w-10 h-10 text-slate-400 mb-2"></i>
+                                <h3 class="font-semibold text-slate-600">Add New Project</h3>
+                                <p class="text-sm text-slate-500">Showcase your skills and experience.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Opportunities Page -->
+                    <div id="opportunities" class="page">
+                         <h2 class="text-2xl font-bold text-slate-800 mb-4">Discover Opportunities</h2>
+                         <div class="relative mb-6">
+                            <input type="text" placeholder="Search by title, company, or keyword..." class="w-full pl-12 pr-4 py-3 rounded-lg border border-slate-300 bg-white/60 backdrop-blur-md focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                            <i data-lucide="search" class="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400"></i>
+                         </div>
+                         <div class="space-y-4">
+                            <!-- Opportunity Item -->
+                            <div class="bg-white/60 backdrop-blur-md p-5 rounded-xl shadow-sm transition-all hover:shadow-md">
+                                <div class="flex items-start justify-between">
+                                    <div>
+                                        <h3 class="font-bold text-lg text-slate-800">Software Engineering Intern (Fall 2025)</h3>
+                                        <div class="flex flex-wrap items-center gap-x-4 gap-y-1 text-sm text-slate-500 mt-1">
+                                            <span class="flex items-center gap-1"><i data-lucide="building-2" class="w-4 h-4"></i>QuantumLeap AI</span>
+                                            <span class="flex items-center gap-1"><i data-lucide="map-pin" class="w-4 h-4"></i>Remote</span>
+                                            <span class="flex items-center gap-1 text-green-500"><i data-lucide="calendar" class="w-4 h-4"></i>Posted today</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <p class="text-slate-600 my-4 text-sm">Work on our core machine learning infrastructure, building and deploying models at scale. Ideal for students passionate about AI and distributed systems.</p>
+                                <div class="flex items-center justify-between">
+                                    <div class="flex gap-2">
+                                        <span class="bg-purple-100 text-purple-700 text-xs font-semibold px-3 py-1 rounded-full">SWE Intern</span>
+                                        <span class="bg-rose-100 text-rose-700 text-xs font-semibold px-3 py-1 rounded-full">AI/ML</span>
+                                    </div>
+                                    <button class="bg-indigo-600 text-white font-semibold px-4 py-2 rounded-lg hover:bg-indigo-700 transition-colors">Apply Now</button>
+                                </div>
+                            </div>
+                            <!-- Opportunity Item 2 -->
+                             <div class="bg-white/60 backdrop-blur-md p-5 rounded-xl shadow-sm transition-all hover:shadow-md">
+                                <div class="flex items-start justify-between">
+                                    <div>
+                                        <h3 class="font-bold text-lg text-slate-800">Marketing Intern</h3>
+                                        <div class="flex flex-wrap items-center gap-x-4 gap-y-1 text-sm text-slate-500 mt-1">
+                                            <span class="flex items-center gap-1"><i data-lucide="building-2" class="w-4 h-4"></i>Connectify</span>
+                                            <span class="flex items-center gap-1"><i data-lucide="map-pin" class="w-4 h-4"></i>Austin, TX</span>
+                                            <span class="flex items-center gap-1 text-slate-400"><i data-lucide="calendar" class="w-4 h-4"></i>Posted 3 days ago</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <p class="text-slate-600 my-4 text-sm">Join our dynamic marketing team to work on social media campaigns, content creation, and market analysis. A great opportunity to learn about growth marketing.</p>
+                                <div class="flex items-center justify-between">
+                                     <span class="bg-teal-100 text-teal-700 text-xs font-semibold px-3 py-1 rounded-full">Marketing</span>
+                                    <button class="bg-indigo-600 text-white font-semibold px-4 py-2 rounded-lg hover:bg-indigo-700 transition-colors">Apply Now</button>
+                                </div>
+                            </div>
+                         </div>
+                    </div>
+
+                    <!-- Mentors Page -->
+                    <div id="mentors" class="page">
+                        <h2 class="text-2xl font-bold text-slate-800 mb-4">Find a Mentor</h2>
+                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                            <!-- Mentor Card 1 -->
+                            <div class="mentor-card bg-white/60 backdrop-blur-md p-6 rounded-xl shadow-sm text-center transition-all hover:shadow-md hover:-translate-y-1" data-about="With over 10 years of experience at Google, Alicia is passionate about building user-centric products and scaling them globally. She specializes in product strategy and team leadership.">
+                                <img src="https://placehold.co/100x100/E2E8F0/475569?text=AV" alt="Mentor Avatar" class="w-24 h-24 rounded-full mx-auto mb-4 border-4 border-slate-200">
+                                <h3 class="font-bold text-lg text-slate-800">Mr. Sharma</h3>
+                                <p class="text-indigo-600 text-sm font-medium">Professor</p>
+                                <p class="text-slate-500 text-sm mb-4">Chandigarh University</p>
+                                <p class="text-slate-500 text-sm mb-4">Specializing in the field of AI/ML. Happy to guide students on research projects and career paths in data science.</p>
+                                <button class="connect-btn w-full bg-indigo-100 text-indigo-700 font-semibold px-4 py-2 rounded-lg hover:bg-indigo-200 transition-colors">Connect</button>
+                            </div>
+                             <!-- Mentor Card 2 -->
+                            <div class="mentor-card bg-white/60 backdrop-blur-md p-6 rounded-xl shadow-sm text-center transition-all hover:shadow-md hover:-translate-y-1" data-about="Ben is a full-stack engineer with expertise in fintech solutions. At Stripe, he leads a team focused on developing secure and scalable payment infrastructures. He enjoys mentoring junior developers.">
+                                <img src="https://placehold.co/100x100/E2E8F0/475569?text=BJ" alt="Mentor Avatar" class="w-24 h-24 rounded-full mx-auto mb-4 border-4 border-slate-200">
+                                <h3 class="font-bold text-lg text-slate-800">Ben Jacobs</h3>
+                                <p class="text-indigo-600 text-sm font-medium">Lead Software Engineer</p>
+                                <p class="text-slate-500 text-sm mb-4">Stripe</p>
+                                <button class="connect-btn w-full bg-indigo-100 text-indigo-700 font-semibold px-4 py-2 rounded-lg hover:bg-indigo-200 transition-colors">Connect</button>
+                            </div>
+                             <!-- Mentor Card 3 -->
+                            <div class="mentor-card bg-white/60 backdrop-blur-md p-6 rounded-xl shadow-sm text-center transition-all hover:shadow-md hover:-translate-y-1" data-about="Chloe believes that great design can solve complex problems. At Microsoft, she leads the UX for enterprise tools, focusing on accessibility and intuitive interfaces. She's an advocate for design thinking.">
+                                <img src="https://placehold.co/100x100/E2E8F0/475569?text=CS" alt="Mentor Avatar" class="w-24 h-24 rounded-full mx-auto mb-4 border-4 border-slate-200">
+                                <h3 class="font-bold text-lg text-slate-800">Chloe Sullivan</h3>
+                                <p class="text-indigo-600 text-sm font-medium">UX Design Lead</p>
+                                <p class="text-slate-500 text-sm mb-4">Microsoft</p>
+                                <button class="connect-btn w-full bg-indigo-100 text-indigo-700 font-semibold px-4 py-2 rounded-lg hover:bg-indigo-200 transition-colors">Connect</button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Leaderboard Page -->
+                    <div id="leaderboard" class="page">
+                        <h2 class="text-2xl font-bold text-slate-800 mb-4">Weekly Leaderboard</h2>
+                        <div class="bg-white/60 backdrop-blur-md rounded-xl shadow-sm overflow-hidden">
+                            <ul class="divide-y divide-slate-100">
+                                <!-- Leaderboard Item 1 -->
+                                <li class="flex items-center p-4 gap-4">
+                                    <span class="text-lg font-bold text-slate-400 w-8 text-center">1</span>
+                                    <img src="https://placehold.co/40x40/E2E8F0/475569?text=MR" alt="User Avatar" class="w-10 h-10 rounded-full">
+                                    <div class="flex-1">
+                                        <p class="font-semibold text-slate-700">Maria Rodriguez</p>
+                                        <p class="text-sm text-slate-500">5 applications, 3 portfolio updates</p>
+                                    </div>
+                                    <div class="font-bold text-green-500">1250 pts</div>
+                                </li>
+                                <!-- Leaderboard Item 2 -->
+                                <li class="flex items-center p-4 gap-4 bg-indigo-50/50">
+                                    <span class="text-lg font-bold text-slate-400 w-8 text-center">2</span>
+                                    <img src="https://placehold.co/40x40/E2E8F0/475569?text=JD" alt="User Avatar" class="w-10 h-10 rounded-full">
+                                    <div class="flex-1">
+                                        <p class="font-semibold text-slate-700">You (John Doe)</p>
+                                        <p class="text-sm text-slate-500">2 applications, 1 portfolio update</p>
+                                    </div>
+                                    <div class="font-bold text-green-500">980 pts</div>
+                                </li>
+                                 <!-- Leaderboard Item 3 -->
+                                <li class="flex items-center p-4 gap-4">
+                                    <span class="text-lg font-bold text-slate-400 w-8 text-center">3</span>
+                                    <img src="https://placehold.co/40x40/E2E8F0/475569?text=LK" alt="User Avatar" class="w-10 h-10 rounded-full">
+                                    <div class="flex-1">
+                                        <p class="font-semibold text-slate-700">Liam Kelly</p>
+                                        <p class="text-sm text-slate-500">3 applications</p>
+                                    </div>
+                                    <div class="font-bold text-green-500">800 pts</div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- Profile Page -->
+                    <div id="profile" class="page space-y-8">
+                        <div class="bg-white/60 backdrop-blur-md p-6 rounded-xl shadow-sm">
+                            <div class="flex flex-col md:flex-row items-center gap-6 text-center md:text-left">
+                                <img src="https://placehold.co/120x120/E2E8F0/475569?text=JD" alt="Profile Picture" class="w-32 h-32 rounded-full border-4 border-indigo-200">
+                                <div>
+                                    <h2 class="text-3xl font-bold text-slate-800">John Doe</h2>
+                                    <p class="text-slate-500 mt-1">Aspiring Product Manager | Computer Science Student @ University of Tech</p>
+                                    <div class="flex items-center justify-center md:justify-start gap-2 text-sm text-slate-500 mt-2">
+                                        <i data-lucide="map-pin" class="w-4 h-4"></i>
+                                        <span>San Francisco Bay Area</span>
+                                    </div>
+                                    <button class="mt-4 bg-indigo-600 text-white font-semibold px-4 py-2 rounded-lg hover:bg-indigo-700 transition-colors">Edit Profile</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="bg-white/60 backdrop-blur-md p-6 rounded-xl shadow-sm">
+                             <h3 class="text-xl font-bold text-slate-800 mb-4">About</h3>
+                             <p class="text-slate-600">I'm a passionate and driven Computer Science student with a keen interest in the intersection of technology, business, and user experience. Currently seeking internship opportunities in Product Management where I can apply my analytical skills and collaborative spirit to build impactful products.</p>
+                        </div>
+                        <div class="bg-white/60 backdrop-blur-md p-6 rounded-xl shadow-sm">
+                             <h3 class="text-xl font-bold text-slate-800 mb-4">Skills</h3>
+                             <div class="flex flex-wrap gap-2">
+                                <span class="bg-slate-200 text-slate-800 text-sm font-medium px-3 py-1.5 rounded-full">Product Strategy</span>
+                                <span class="bg-slate-200 text-slate-800 text-sm font-medium px-3 py-1.5 rounded-full">Agile Methodologies</span>
+                                <span class="bg-slate-200 text-slate-800 text-sm font-medium px-3 py-1.5 rounded-full">Market Research</span>
+                                <span class="bg-slate-200 text-slate-800 text-sm font-medium px-3 py-1.5 rounded-full">Python</span>
+                                <span class="bg-slate-200 text-slate-800 text-sm font-medium px-3 py-1.5 rounded-full">SQL</span>
+                                <span class="bg-slate-200 text-slate-800 text-sm font-medium px-3 py-1.5 rounded-full">Figma</span>
+                             </div>
+                        </div>
+                    </div>
+
+                    <!-- Settings Page -->
+                    <div id="settings" class="page space-y-8">
+                         <h2 class="text-2xl font-bold text-slate-800 mb-4">Settings</h2>
+                         <!-- Account Settings -->
+                         <div class="bg-white/60 backdrop-blur-md p-6 rounded-xl shadow-sm">
+                            <h3 class="text-xl font-bold text-slate-800 border-b border-slate-200 pb-3 mb-4">Account</h3>
+                            <div class="space-y-4">
+                                <div>
+                                    <label class="block text-sm font-medium text-slate-700">Full Name</label>
+                                    <input type="text" value="John Doe" class="mt-1 block w-full md:w-1/2 rounded-md border-slate-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 bg-white/50">
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-slate-700">Email Address</label>
+                                    <input type="email" value="john.doe@email.com" class="mt-1 block w-full md:w-1/2 rounded-md border-slate-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 bg-white/50">
+                                </div>
+                                <button class="text-indigo-600 hover:underline">Change Password</button>
+                            </div>
+                         </div>
+                         <!-- Notification Settings -->
+                         <div class="bg-white/60 backdrop-blur-md p-6 rounded-xl shadow-sm">
+                             <h3 class="text-xl font-bold text-slate-800 border-b border-slate-200 pb-3 mb-4">Notifications</h3>
+                             <div class="space-y-4">
+                                <div class="flex items-center justify-between">
+                                    <div>
+                                        <p class="font-medium text-slate-800">New Opportunity Matches</p>
+                                        <p class="text-sm text-slate-500">Notify me when AI finds a new match for my profile.</p>
+                                    </div>
+                                    <button class="w-12 h-6 bg-green-400 rounded-full flex items-center p-1 cursor-pointer" aria-checked="true">
+                                        <span class="sr-only">Enable notifications</span>
+                                        <div class="w-5 h-5 bg-white rounded-full shadow-md transform translate-x-5 transition-transform"></div>
+                                    </button>
+                                </div>
+                                <div class="flex items-center justify-between">
+                                    <div>
+                                        <p class="font-medium text-slate-800">Application Status Updates</p>
+                                        <p class="text-sm text-slate-500">Get notified when there's an update on your applications.</p>
+                                    </div>
+                                     <button class="w-12 h-6 bg-slate-200 rounded-full flex items-center p-1 cursor-pointer" aria-checked="false">
+                                        <span class="sr-only">Enable notifications</span>
+                                        <div class="w-5 h-5 bg-white rounded-full shadow-md transform transition-transform"></div>
+                                    </button>
+                                </div>
+                             </div>
+                         </div>
+                    </div>
+                </div>
+
+                <!-- Right sidebar -->
+                <aside class="hidden lg:block">
+                    <div class="sticky top-8 space-y-8">
+                        <div class="flex justify-end items-center gap-4">
+                            <button id="chatbot-toggle" title="AI Assistant" class="relative text-slate-600 hover:text-indigo-600 transition-colors">
+                                <i data-lucide="message-square-dashed" class="w-9 h-9"></i>
+                            </button>
+                            <button class="relative">
+                                <i data-lucide="user-circle-2" class="w-10 h-10 text-slate-600"></i>
+                                <span class="absolute top-0 right-0 block h-2.5 w-2.5 rounded-full bg-green-400 ring-2 ring-white"></span>
+                            </button>
+                        </div>
+                        <div class="bg-white/60 backdrop-blur-md p-6 rounded-xl shadow-sm">
+                            <h3 class="font-bold text-slate-800 mb-4">Quick Actions</h3>
+                            <div class="space-y-3">
+                                <button class="w-full flex items-center gap-3 p-3 rounded-lg bg-blue-100 hover:bg-blue-200 transition-colors">
+                                    <i data-lucide="search" class="text-blue-700"></i>
+                                    <div class="text-left text-blue-800">
+                                        <p class="font-semibold">Find Internships</p>
+                                        <p class="text-xs">Discover new opportunities</p>
+                                    </div>
+                                </button>
+                                <button class="w-full flex items-center gap-3 p-3 rounded-lg bg-purple-100 hover:bg-purple-200 transition-colors">
+                                    <i data-lucide="lightbulb" class="text-purple-700"></i>
+                                    <div class="text-left text-purple-800">
+                                        <p class="font-semibold">View Recommendations</p>
+                                        <p class="text-xs">AI-powered matches</p>
+                                    </div>
+                                </button>
+                                <button class="w-full flex items-center gap-3 p-3 rounded-lg bg-green-100 hover:bg-green-200 transition-colors">
+                                    <i data-lucide="arrow-up-circle" class="text-green-700"></i>
+                                    <div class="text-left text-green-800">
+                                        <p class="font-semibold">Update Profile</p>
+                                        <p class="text-xs">Improve your visibility</p>
+                                    </div>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="bg-white/60 backdrop-blur-md p-6 rounded-xl shadow-sm">
+                            <h3 class="font-bold text-slate-800 mb-4">Today's Activities</h3>
+                            <ul class="space-y-3 text-slate-600">
+                                <li class="flex justify-between items-baseline">
+                                    <span>New Matches:</span>
+                                    <span class="font-bold text-lg text-indigo-600">3</span>
+                                </li>
+                                <li class="flex justify-between items-baseline">
+                                    <span>Profile Views:</span>
+                                    <span class="font-bold text-lg text-indigo-600">+12</span>
+                                </li>
+                                <li class="flex justify-between items-baseline">
+                                    <span>Messages:</span>
+                                    <span class="font-bold text-lg text-indigo-600">2 new</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </aside>
+            </div>
+        </main>
+    </div>
+
+    <!-- Chatbot Popup -->
+    <div id="chatbot-container" class="hidden fixed top-24 right-8 w-96 bg-white/70 backdrop-blur-xl rounded-2xl shadow-2xl z-50 transform transition-all duration-300 ease-in-out">
+        <div class="p-4 bg-indigo-600 text-white rounded-t-2xl flex justify-between items-center">
+            <h3 class="font-bold text-lg flex items-center gap-2">
+                <i data-lucide="bot" class="w-6 h-6"></i>
+                <span>AI Assistant</span>
+            </h3>
+            <button id="close-chatbot" class="hover:bg-indigo-500 p-1 rounded-full transition-colors">
+                <i data-lucide="x" class="w-5 h-5"></i>
+            </button>
+        </div>
+        <div id="chatbot-messages" class="p-4 h-80 overflow-y-auto space-y-4">
+            <!-- Bot Welcome Message -->
+            <div class="flex gap-2">
+                <div class="w-8 h-8 rounded-full bg-indigo-500 flex items-center justify-center flex-shrink-0">
+                    <i data-lucide="bot" class="w-5 h-5 text-white"></i>
+                </div>
+                <div class="bg-slate-100 p-3 rounded-lg rounded-tl-none">
+                    <p class="text-sm text-slate-700">Hello! How can I help you find opportunities or prepare your portfolio today?</p>
+                </div>
+            </div>
+        </div>
+        <div class="p-4 border-t border-slate-200">
+            <form id="chatbot-form" class="flex gap-2">
+                <input type="text" id="chatbot-input" placeholder="Ask a question..." class="flex-1 px-4 py-2 rounded-lg border border-slate-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 bg-white/80">
+                <button type="submit" class="bg-indigo-600 text-white font-semibold px-4 py-2 rounded-lg hover:bg-indigo-700 transition-colors flex items-center justify-center">
+                    <i data-lucide="send" class="w-5 h-5"></i>
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Mentor Connect Modal -->
+    <div id="mentor-modal" class="hidden fixed inset-0 bg-black/30 backdrop-blur-sm z-50 flex items-center justify-center p-4 opacity-0 transition-opacity duration-300">
+        <div id="mentor-modal-content" class="bg-white/80 backdrop-blur-xl w-full max-w-md p-6 rounded-2xl shadow-2xl transform transition-all duration-300 scale-95 opacity-0">
+            <!-- Close Button -->
+            <button id="close-mentor-modal" class="absolute top-4 right-4 text-slate-500 hover:text-slate-800 transition-colors">
+                <i data-lucide="x" class="w-6 h-6"></i>
+            </button>
+
+            <!-- Mentor Info -->
+            <div class="flex items-center gap-4">
+                <img id="modal-mentor-img" src="" alt="Mentor Avatar" class="w-20 h-20 rounded-full border-4 border-slate-200">
+                <div>
+                    <h3 id="modal-mentor-name" class="font-bold text-2xl text-slate-800">Mentor Name</h3>
+                    <p id="modal-mentor-title" class="text-indigo-600 font-medium">Mentor Title</p>
+                    <p id="modal-mentor-company" class="text-slate-500 text-sm">Company</p>
+                </div>
+            </div>
+
+            <!-- About Section -->
+            <div class="mt-6">
+                <h4 class="font-bold text-lg text-slate-700 mb-2">About</h4>
+                <p id="modal-mentor-about" class="text-slate-600 text-sm leading-relaxed">
+                    Mentor bio will appear here.
+                </p>
+            </div>
+
+            <!-- Connect Section -->
+            <div class="mt-6 border-t border-slate-200 pt-4">
+                 <h4 class="font-bold text-lg text-slate-700 mb-3">Connect</h4>
+                 <div class="flex gap-4">
+                    <a href="#" class="flex-1 flex items-center justify-center gap-2 bg-blue-600 text-white font-semibold px-4 py-3 rounded-lg hover:bg-blue-700 transition-colors">
+                        <i data-lucide="linkedin" class="w-5 h-5"></i>
+                        <span>LinkedIn</span>
+                    </a>
+                     <a href="#" class="flex-1 flex items-center justify-center gap-2 bg-slate-600 text-white font-semibold px-4 py-3 rounded-lg hover:bg-slate-700 transition-colors">
+                        <i data-lucide="link" class="w-5 h-5"></i>
+                        <span>Website</span>
+                    </a>
+                 </div>
+            </div>
+
+        </div>
+    </div>
+
+
+    <script>
+        // Initialize Lucide icons
+        lucide.createIcons();
+        
+        // SPA Navigation Logic
+        const navMenu = document.getElementById('nav-menu');
+        const pages = document.querySelectorAll('.page');
+        const navItems = document.querySelectorAll('.nav-item');
+        const mainContent = document.getElementById('main-content');
+
+        function navigateToPage(pageId) {
+            // Update active state on nav items
+            navItems.forEach(item => {
+                if(item.dataset.page === pageId) {
+                    item.classList.add('active');
+                } else {
+                    item.classList.remove('active');
+                }
+            });
+
+            // Show the correct page
+            pages.forEach(page => {
+                if (page.id === pageId) {
+                    page.classList.add('active');
+                } else {
+                    page.classList.remove('active');
+                }
+            });
+            mainContent.scrollTop = 0; // Scroll to top on page change
+        }
+        
+        navMenu.addEventListener('click', (e) => {
+            const navLink = e.target.closest('a.nav-item');
+            if (!navLink) return;
+
+            e.preventDefault();
+            const pageId = navLink.dataset.page;
+            if (pageId) {
+                navigateToPage(pageId);
+            }
+        });
+        
+        // Chatbot Logic
+        const chatbotToggle = document.getElementById('chatbot-toggle');
+        const chatbotContainer = document.getElementById('chatbot-container');
+        const closeChatbot = document.getElementById('close-chatbot');
+        const chatbotForm = document.getElementById('chatbot-form');
+        const chatbotInput = document.getElementById('chatbot-input');
+        const chatbotMessages = document.getElementById('chatbot-messages');
+
+        chatbotToggle.addEventListener('click', () => {
+            chatbotContainer.classList.toggle('hidden');
+        });
+
+        closeChatbot.addEventListener('click', () => {
+            chatbotContainer.classList.add('hidden');
+        });
+
+        chatbotForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const message = chatbotInput.value.trim();
+            if (!message) return;
+
+            // Display user message
+            const userMessageEl = document.createElement('div');
+            userMessageEl.classList.add('flex', 'justify-end');
+            userMessageEl.innerHTML = `
+                <div class="bg-indigo-500 text-white p-3 rounded-lg rounded-br-none max-w-xs">
+                    <p class="text-sm break-words">${message}</p>
+                </div>
+            `;
+            chatbotMessages.appendChild(userMessageEl);
+            chatbotInput.value = '';
+            chatbotMessages.scrollTop = chatbotMessages.scrollHeight;
+
+            // Simulate bot response
+            setTimeout(() => {
+                const botMessageEl = document.createElement('div');
+                botMessageEl.classList.add('flex', 'gap-2');
+                botMessageEl.innerHTML = `
+                    <div class="w-8 h-8 rounded-full bg-indigo-500 flex items-center justify-center flex-shrink-0">
+                        <i data-lucide="bot" class="w-5 h-5 text-white"></i>
+                    </div>
+                    <div class="bg-slate-100 p-3 rounded-lg rounded-tl-none max-w-xs">
+                        <p class="text-sm text-slate-700 break-words">Thanks for your message! I'm still in training, but I'm learning to help with things like "Find PM internships in SF" or "Critique my resume."</p>
+                    </div>
+                `;
+                chatbotMessages.appendChild(botMessageEl);
+                chatbotMessages.scrollTop = chatbotMessages.scrollHeight;
+                lucide.createIcons(); // Re-render icons if any were added
+            }, 1000);
+        });
+
+        // Mentor Modal Logic
+        const mentorPage = document.getElementById('mentors');
+        const mentorModal = document.getElementById('mentor-modal');
+        const mentorModalContent = document.getElementById('mentor-modal-content');
+        const closeMentorModalBtn = document.getElementById('close-mentor-modal');
+        const modalMentorImg = document.getElementById('modal-mentor-img');
+        const modalMentorName = document.getElementById('modal-mentor-name');
+        const modalMentorTitle = document.getElementById('modal-mentor-title');
+        const modalMentorCompany = document.getElementById('modal-mentor-company');
+        const modalMentorAbout = document.getElementById('modal-mentor-about');
+
+        function openMentorModal(mentorData) {
+            // Populate modal
+            modalMentorImg.src = mentorData.img;
+            modalMentorName.textContent = mentorData.name;
+            modalMentorTitle.textContent = mentorData.title;
+            modalMentorCompany.textContent = mentorData.company;
+            modalMentorAbout.textContent = mentorData.about;
+
+            // Show modal with animation
+            mentorModal.classList.remove('hidden');
+            setTimeout(() => {
+                mentorModal.classList.remove('opacity-0');
+                mentorModalContent.classList.remove('scale-95', 'opacity-0');
+                mentorModalContent.classList.add('scale-100', 'opacity-100');
+            }, 10);
+        }
+
+        function closeMentorModal() {
+            mentorModal.classList.add('opacity-0');
+            mentorModalContent.classList.remove('scale-100', 'opacity-100');
+            mentorModalContent.classList.add('scale-95', 'opacity-0');
+            
+            setTimeout(() => {
+                mentorModal.classList.add('hidden');
+            }, 300); // Match duration-300
+        }
+
+        mentorPage.addEventListener('click', (e) => {
+            const connectButton = e.target.closest('.connect-btn');
+            if (!connectButton) return;
+
+            e.preventDefault();
+            const mentorCard = connectButton.closest('.mentor-card');
+
+            const mentorData = {
+                img: mentorCard.querySelector('img').src,
+                name: mentorCard.querySelector('h3').textContent,
+                title: mentorCard.querySelector('p:nth-of-type(1)').textContent,
+                company: mentorCard.querySelector('p:nth-of-type(2)').textContent,
+                about: mentorCard.dataset.about
+            };
+
+            openMentorModal(mentorData);
+        });
+
+        closeMentorModalBtn.addEventListener('click', closeMentorModal);
+        mentorModal.addEventListener('click', (e) => {
+            if (e.target === mentorModal) {
+                closeMentorModal();
+            }
+        });
+
+        // Settings Toggle Switch Logic
+        document.querySelectorAll('button[aria-checked]').forEach(button => {
+            button.addEventListener('click', () => {
+                const isChecked = button.getAttribute('aria-checked') === 'true';
+                button.setAttribute('aria-checked', !isChecked);
+                const circle = button.querySelector('div');
+                if(!isChecked) {
+                    button.classList.remove('bg-slate-200');
+                    button.classList.add('bg-green-400');
+                    circle.classList.add('translate-x-5');
+                } else {
+                    button.classList.add('bg-slate-200');
+                    button.classList.remove('bg-green-400');
+                    circle.classList.remove('translate-x-5');
+                }
+            });
+        });
+
+    </script>
+    <div id="rasa-chat-widget" data-websocket-url="http://localhost:5005/"></div>
+<script src="https://unpkg.com/@rasahq/rasa-chat" type="application/javascript"></script>
+</body>
+</html>

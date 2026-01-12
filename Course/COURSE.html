@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<head>
+    <style>
+     .Stretch{
+        background-color: rgb(0, 123,0);
+        border-style: solid;
+        border : none;
+        padding-top: 5px;
+        padding-bottom: 5px;
+        padding-left:8px;
+        padding-right:8px;
+        color: white;
+        font-size: 12px;
+        appearance: none;
+        box-shadow: 3px 3px 6px rgba(0, 0, 0, 0.3);
+        transition: .7s;
+        
+    }
+    /*.Stretch:hover{
+        background-color: rgb(0, 100,0);
+        cursor: pointer;
+        padding-top: 20px;
+        padding-bottom: 20px;
+        padding-right: 25px;
+        padding-left: 25px;
+        font-size: 25px;
+    }*/
+    .Stretch:active {
+      box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.6); /* pressed effect */
+      transform: translateY(7px); /* move down when clicked */
+    }
+    .mew{
+        display: inline-block;
+        width: 200px;
+    }
+</style>
+</head>
+<body>
+    <p class="mew">Thanks for chatting with our customer support. Would you like to take our quick survey? </p>
+    <button class="Stretch">Stretch</button>
+</body>
+</html>

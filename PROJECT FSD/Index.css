@@ -1,0 +1,199 @@
+/* src/index.css */
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: #111;
+  color: #f0f2f5;
+  margin: 0;
+  padding: 0;
+}
+
+.App {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 100px;
+}
+
+.App-header {
+  background-color: #282c34;
+  padding: 20px;
+  border-radius: 8px;
+  color: white;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+h1 {
+  margin: 0;
+}
+
+h2 {
+  border-bottom: 2px solid #ccc;
+  padding-bottom: 10px;
+}
+
+/* Default grid for non-carousel contexts */
+.item-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 16px;
+}
+
+/* ----------------- CARD BASE ----------------- */
+
+:root {
+  /* tune these two numbers to get the exact look you want */
+  --card-width: 220px;         /* width of each card */
+  --poster-height: 300px;      /* fixed poster height in px (2:3 look) */
+  --title-lines: 2;            /* how many lines to show for the title */
+  --title-line-height: 1.25rem;/* must match h4 line-height */
+  --title-block-height: calc(var(--title-lines) * var(--title-line-height));
+  --content-vertical-padding: 26px; /* 12px top + 14px bottom in .item-card-content */
+  --meta-height: 0px;          /* set to 18px if you show a meta line */
+  /* final card height = poster + title block + meta + padding */
+  --card-height: calc(var(--poster-height) + var(--title-block-height) + var(--meta-height) + var(--content-vertical-padding));
+}
+
+.item-card {
+  width: var(--card-width);
+  height: var(--card-height);
+  background: #fff;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 0;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.item-card:hover {
+  transform: scale(1.03);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.item-card-rec {
+  background-color: #e6f7ff;
+  border-color: #91d5ff;
+}
+
+.item-card-pop {
+  background-color: #f6ffed;
+  border-color: #b7eb8f;
+}
+
+/* ----------------- POSTER ----------------- */
+
+.item-poster-wrap {
+  width: 100%;
+  height: var(--poster-height); /* hard pixel height; no variance */
+  background: #111;
+  overflow: hidden;
+  flex: 0 0 var(--poster-height); /* lock it */
+}
+
+.item-poster-wrap img,
+.item-poster {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* crop without distortion */
+  display: block;
+}
+
+/* ----------------- CONTENT ----------------- */
+
+.item-card-content {
+  flex: 1 1 auto; /* consume the rest (title area) */
+  padding: 12px 12px 14px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+
+.item-card h4 {
+  margin: 0 0 8px 0;
+  font-size: 1rem;
+  line-height: var(--title-line-height);
+  height: var(--title-block-height);   /* exact 2 lines */
+  display: -webkit-box;
+  -webkit-line-clamp: var(--title-lines);
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Optional meta line — if you use it, set --meta-height above (e.g., 18px) */
+.item-card-content .meta-line {
+  font-size: 0.85rem;
+  line-height: 1.1rem;
+  height: 0; /* 0 by default; change to 1.1rem and var if you show it */
+  overflow: hidden;
+}
+
+/* ----------------- PAGINATION ----------------- */
+
+.pagination-controls {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.pagination-controls button {
+  font-size: 1rem;
+  padding: 8px 16px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.pagination-controls button:hover {
+  background-color: #0056b3;
+}
+
+.pagination-controls button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+.pagination-controls span {
+  font-size: 1.1rem;
+  font-weight: bold;
+}
+
+/* --------------- CAROUSEL ROWS --------------- */
+
+.recommendations-container .item-grid,
+.popular-items-container .item-grid {
+  display: flex;
+  overflow-x: auto;
+  flex-wrap: nowrap;
+  padding-bottom: 20px;
+  gap: 16px;
+  grid-template-columns: unset;
+}
+
+.recommendations-container .item-card,
+.popular-items-container .item-card {
+  flex: 0 0 var(--card-width);  /* fixed width in the row */
+}
+
+/* Hide scrollbars (optional) */
+.recommendations-container .item-grid::-webkit-scrollbar,
+.popular-items-container .item-grid::-webkit-scrollbar {
+  display: none;
+}
+
+.recommendations-container .item-grid,
+.popular-items-container .item-grid {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}

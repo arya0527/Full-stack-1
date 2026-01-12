@@ -1,0 +1,16 @@
+#container{
+    border:2px solid black;
+    width: 50%;
+    margin: 20px;
+    padding: 10px
+}
+.filter-section{
+    display: flex;
+    padding: 20px;
+    align-items: center;
+    border-bottom: 1px solid white;
+}
+.filter-section label{
+    margin-right: 10px;
+    font-size: 10px;
+}
